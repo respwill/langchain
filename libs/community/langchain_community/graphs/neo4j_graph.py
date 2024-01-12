@@ -94,6 +94,13 @@ class Neo4jGraph(GraphStore):
                 "'apoc.meta.data()' is allowed in Neo4j configuration "
             )
 
+    # To close driver properly in the end of the code.
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._driver.close()
+    
     @property
     def get_schema(self) -> str:
         """Returns the schema of the Graph"""
