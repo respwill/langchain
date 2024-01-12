@@ -93,6 +93,12 @@ class Neo4jGraph(GraphStore):
                 "Please ensure the APOC plugin is installed in Neo4j and that "
                 "'apoc.meta.data()' is allowed in Neo4j configuration "
             )
+    # To use With statement.
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._driver.close()
 
     @property
     def get_schema(self) -> str:
